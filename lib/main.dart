@@ -49,6 +49,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool test = false;
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -71,24 +73,58 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("Navigation"),
               decoration: BoxDecoration(color: Colors.blue),
             ),
-            ListTile(
-              title: Text("First Page"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-            ),
-            ListTile(
-              title: new Text("Second Page"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-            ),
+            Visibility(
+                visible: test == false,
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: new Text("Login"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => LoginPage()),
+                        );
+                      },
+                    ),
+                  ],
+                )),
+            Visibility(
+                visible: test == true,
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: new Text("Compte"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => LoginPage()),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      title: new Text("Favorie"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => LoginPage()),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      title: new Text("Settings"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => LoginPage()),
+                        );
+                      },
+                    ),
+                  ],
+                ))
           ],
         ),
       ),
