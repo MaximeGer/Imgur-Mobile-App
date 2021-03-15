@@ -1,3 +1,4 @@
+import 'package:epicture/home.dart';
 import 'package:epicture/login.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +58,40 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: new LoginPage(),
+      appBar: AppBar(
+        title: Text('Imgur'),
+      ),
+      body: Center(
+        child: HomePage(),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("Navigation"),
+              decoration: BoxDecoration(color: Colors.blue),
+            ),
+            ListTile(
+              title: Text("First Page"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+            ),
+            ListTile(
+              title: new Text("Second Page"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
