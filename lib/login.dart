@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -10,6 +11,35 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  void login() async {
+    // BrowserClient().get(Uri.https('api.imgur.com', '/3/image/T0IBWsL'),
+    //     headers: {'Authorization': 'Client-ID 761207468cb80bd'});
+    // Request a = Request('GET', Uri.https('api.imgur.com', '/3/image/T0IBWsL'));
+    // Request a = Request('GET', Uri.https('swapi.dev', 'api/people/1/'));
+    // StreamedResponse b = await BrowserClient().send(a);
+    // b.listen()
+    // HttpClient()
+    //     .getUrl(Uri.https('api.imgur.com', '3/image/T0IBWsL'))
+    //     .then((HttpClientRequest request) {
+    //   request.headers.add("Authorization", 'Client-ID 761207468cb80bd');
+    //   return request.close();
+    // }).then((HttpClientResponse response) {
+    //   print("a");
+    // });
+
+    var headers = {'Authorization': 'Client-ID 761207468cb80bd'};
+    var request = http.MultipartRequest(
+        'GET', Uri.parse('https://api.imgur.com/3/image/T0IBWsL'));
+
+    request.headers.addAll(headers);
+
+    final response = await request.send();
+
+    final repStr = await response.stream.bytesToString();
+
+    print(repStr);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                             textStyle: TextStyle(fontSize: 18),
                             minimumSize: Size(150, 45),
                           ),
-                          onPressed: () {
-                            // Respond to button press
-                          },
+                          onPressed: login,
                           child: Text(
                             'Login',
                           ),
@@ -72,9 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                             textStyle: TextStyle(fontSize: 18),
                             minimumSize: Size(150, 45),
                           ),
-                          onPressed: () {
-                            // Respond to button press
-                          },
+                          onPressed: login,
                           child: Text(
                             'Register',
                           ),
