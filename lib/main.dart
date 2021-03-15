@@ -11,11 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Startup Name Generator', 
-      theme: ThemeData(          // Add the 3 lines from here... 
+      title: 'Startup Name Generator',
+      theme: ThemeData(
+        // Add the 3 lines from here...
         primaryColor: Colors.white,
-      ),  
-      home: RandomWords()
+      ),
+      home: RandomWords(),
+      debugShowCheckedModeBanner: false
     );
   }
 }
@@ -38,7 +40,6 @@ class _RandomWordsState extends State<RandomWords> {
         actions: [
           IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
         ],
-
       ),
       body: _buildSuggestions(),
     );
@@ -46,16 +47,16 @@ class _RandomWordsState extends State<RandomWords> {
 
   Widget _buildSuggestions() {
     return ListView.builder(
-      padding: EdgeInsets.all(16.0),
-      itemBuilder: /*1*/ (context, i) {
-        if (i.isOdd) return Divider(); /*2*/
+        padding: EdgeInsets.all(16.0),
+        itemBuilder: /*1*/ (context, i) {
+          if (i.isOdd) return Divider(); /*2*/
 
-        final index = i ~/ 2; /*3*/
-        if (index >= _suggestions.length) {
-          _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-        }
-        return _buildRow(_suggestions[index]);
-      });
+          final index = i ~/ 2; /*3*/
+          if (index >= _suggestions.length) {
+            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+          }
+          return _buildRow(_suggestions[index]);
+        });
   }
 
   Widget _buildRow(WordPair pair) {
@@ -65,25 +66,27 @@ class _RandomWordsState extends State<RandomWords> {
         pair.asPascalCase,
         style: _biggerFont,
       ),
-      trailing: Icon(   // NEW from here... 
+      trailing: Icon(
+        // NEW from here...
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
-      ), 
-      onTap: () {      // NEW lines from here...
+      ),
+      onTap: () {
+        // NEW lines from here...
         setState(() {
           if (alreadySaved) {
             _saved.remove(pair);
-          } else { 
-            _saved.add(pair); 
-          } 
+          } else {
+            _saved.add(pair);
+          }
         });
-      },         
+      },
     );
   }
 
-   void _pushSaved() {
-     Navigator.of(context).push(
-       MaterialPageRoute<void>(
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
         // NEW lines from here...
         builder: (BuildContext context) {
           final tiles = _saved.map(
@@ -109,8 +112,6 @@ class _RandomWordsState extends State<RandomWords> {
           );
         }, // ...to here.
       ),
-
     );
   }
-
 }
