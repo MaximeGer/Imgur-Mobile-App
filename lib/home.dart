@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   void homeData() async {
     var response = await http.get(
-       Uri.parse('https://api.imgur.com/3/image/T0IBWsL'),
+      Uri.parse('https://api.imgur.com/3/image/T0IBWsL'),
       headers: {'Authorization': 'Client-ID ' + client_id},
     );
 
@@ -33,8 +33,8 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Color(0xFF141518),
-        ),
+            //color: Color(0xFF141518),
+            ),
         child: Column(
           children: <Widget>[
             SizedBox(
