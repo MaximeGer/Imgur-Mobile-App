@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:epicture/home.dart';
@@ -13,30 +15,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   void login() async {
-    // BrowserClient().get(Uri.https('api.imgur.com', '/3/image/T0IBWsL'),
-    //     headers: {'Authorization': 'Client-ID 761207468cb80bd'});
-    // Request a = Request('GET', Uri.https('api.imgur.com', '/3/image/T0IBWsL'));
-    // Request a = Request('GET', Uri.https('swapi.dev', 'api/people/1/'));
-    // StreamedResponse b = await BrowserClient().send(a);
-    // b.listen()
-    // HttpClient()
-    //     .getUrl(Uri.https('api.imgur.com', '3/image/T0IBWsL'))
-    //     .then((HttpClientRequest request) {
-    //   request.headers.add("Authorization", 'Client-ID 761207468cb80bd');
-    //   return request.close();
-    // }).then((HttpClientResponse response) {
-    //   print("a");
-    // });
 
-    var headers = {'Authorization': 'Client-ID ' + client_id};
-    var request = http.MultipartRequest(
-        'GET', Uri.parse('https://api.imgur.com/3/image/T0IBWsL'));
+    var response = await http.get(
+       Uri.parse('https://api.imgur.com/3/image/T0IBWsL'),
+      headers: {'Authorization': 'Client-ID ' + client_id},
+    );
 
-    request.headers.addAll(headers);
-
-    final response = await request.send();
-
-    final repStr = await response.stream.bytesToString();
+    final repStr = jsonDecode(response.body);
 
     print(repStr);
   }

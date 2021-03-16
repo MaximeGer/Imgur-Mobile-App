@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,15 +17,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   void homeData() async {
-    var headers = {'Authorization': 'Client-ID ' + client_id};
-    var request = http.MultipartRequest(
-        'GET', Uri.parse('https://api.imgur.com/3/image/T0IBWsL'));
+    var response = await http.get(
+       Uri.parse('https://api.imgur.com/3/image/T0IBWsL'),
+      headers: {'Authorization': 'Client-ID ' + client_id},
+    );
 
-    request.headers.addAll(headers);
-
-    final response = await request.send();
-
-    final repStr = await response.stream.bytesToString();
+    final repStr = jsonDecode(response.body);
 
     print(repStr);
   }
