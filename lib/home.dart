@@ -1,5 +1,8 @@
-import 'package:epicture/login.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+var client_id = "761207468cb80bd";
+var token = "";
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -11,6 +14,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void homeData() async {
+    var headers = {'Authorization': 'Client-ID ' + client_id};
+    var request = http.MultipartRequest(
+        'GET', Uri.parse('https://api.imgur.com/3/image/T0IBWsL'));
+
+    request.headers.addAll(headers);
+
+    final response = await request.send();
+
+    final repStr = await response.stream.bytesToString();
+
+    print(repStr);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +47,18 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(
               height: 10,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF1bb76e), // background
+                onPrimary: Colors.white, // foreground
+                textStyle: TextStyle(fontSize: 18),
+                minimumSize: Size(150, 45),
+              ),
+              onPressed: homeData,
+              child: Text(
+                'homeData',
+              ),
             ),
           ],
         ),

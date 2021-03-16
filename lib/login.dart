@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:epicture/home.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -27,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
     //   print("a");
     // });
 
-    var headers = {'Authorization': 'Client-ID 761207468cb80bd'};
+    var headers = {'Authorization': 'Client-ID ' + client_id};
     var request = http.MultipartRequest(
         'GET', Uri.parse('https://api.imgur.com/3/image/T0IBWsL'));
 
