@@ -25,30 +25,32 @@ class _ImagePageState extends State<ImagePage> {
 
     Map decoded = json.decode(response.body);
 
+    var type;
+
     for (var data in decoded['data']) {
       if (data["type"] == null) {
         for (var dataChild in data["images"]) {
+          type = dataChild['type'].toString().split('/')[1];
           Image image = new Image(
               dataChild['id'],
               dataChild['title'],
               dataChild['description'],
               dataChild['datetime'],
-              dataChild['type'],
+              type,
               dataChild['views'],
               dataChild['link']);
           imageList.add(image);
         }
       } else {
-        Image image = new Image(
-          data['id'],
-          data['title'],
-          data['description'],
-          data['datetime'], 
-          data['type'], 
-          data['views'], 
-          data['link']);
+        type = data['type'].toString().split('/')[1];
+        Image image = new Image(data['id'], data['title'], data['description'],
+            data['datetime'], type, data['views'], data['link']);
         imageList.add(image);
       }
+    }
+
+    for (var i = 0; i < imageList.length; i++) {
+      print(imageList[i].type);
     }
   }
 
