@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -24,13 +23,17 @@ class _ImagePageState extends State<ImagePage> {
       headers: {'Authorization': 'Client-ID ' + client_id},
     );
 
-    var repStr = json.decode(response.body);
-
     Map decoded = json.decode(response.body);
 
     for (var data in decoded['data']) {
       Image image = new Image(data['id'], data['title'], data['description'],
           data['datetime'], data['type'], data['views'], data['link']);
+      if (data["type"] == null) {
+        for (var image in data["images"]) {
+          print(image["type"]);
+        }
+      } else
+        print(data["type"]);
       imageList.add(image);
     }
   }
