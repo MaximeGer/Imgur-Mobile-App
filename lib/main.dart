@@ -2,6 +2,8 @@ import 'package:epicture/home.dart';
 import 'package:epicture/login.dart';
 import 'package:flutter/material.dart';
 import 'package:epicture/image.dart';
+import 'package:epicture/favoris.dart';
+import 'package:epicture/compte.dart';
 
 import 'package:english_words/english_words.dart';
 
@@ -56,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Imgur'),
       ),
       body: Center(
-        child: ImagePage(),
+        child: HomePage(),
       ),
       drawer: Drawer(
         child: ListView(
@@ -66,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(color: Colors.blue),
             ),
             Visibility(
-                visible: test == false,
+                visible: token.isEmpty,
                 child: Column(
                   children: <Widget>[
                     ListTile(
@@ -80,10 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                   ],
-                )),
-            Visibility(
-                visible: test == true,
-                child: Column(
+                ),
+                replacement: Column(
                   children: <Widget>[
                     ListTile(
                       title: new Text("Compte"),
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => LoginPage()),
+                              builder: (context) => ComptePage()),
                         );
                       },
                     ),
@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => LoginPage()),
+                              builder: (context) => FavorisPage()),
                         );
                       },
                     ),
@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                   ],
-                ))
+                )),
           ],
         ),
       ),
