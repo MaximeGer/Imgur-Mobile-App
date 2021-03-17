@@ -99,9 +99,6 @@ class _ImagePageState extends State<ImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Gallery List'),
-      ),
       body: Container(
         child: FutureBuilder<List<dynamic>>(
             future: fetchGalleries({
@@ -125,10 +122,58 @@ class _ImagePageState extends State<ImagePage> {
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
-                          child: Column(children: <Widget>[
-                        Image.network(_images(snapshot.data[index])),
-                        Text(_likes(snapshot.data[index]))
-                      ]));
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFF2c2f34),
+                              ),
+                              child: Column(children: <Widget>[
+                                Image.network(_images(snapshot.data[index])),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 15,
+                                    bottom: 5,
+                                  ),
+                                  child: Flex(
+                                    direction: Axis.horizontal,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      IconButton(
+                                        icon: const Icon(Icons.message),
+                                        color: Color(0xFF8e9094),
+                                        iconSize: 24.0,
+                                        onPressed: () {},
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.star),
+                                        color: Color(0xFF8e9094),
+                                        iconSize: 24.0,
+                                        onPressed: () {},
+                                      ),
+                                      Flex(
+                                        direction: Axis.vertical,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          IconButton(
+                                            icon: const Icon(Icons.favorite),
+                                            color: Color(0xFF8e9094),
+                                            iconSize: 24.0,
+                                            onPressed: () {},
+                                          ),
+                                          Text(
+                                            _likes(snapshot.data[index]),
+                                            style: TextStyle(
+                                                color: Color(0xFF8e9094)),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ])));
                     });
               } else
                 return Card(child: Text("Pas d'images retrouvées"));
