@@ -1,29 +1,65 @@
 import 'dart:convert';
-
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+
 import 'package:epicture/home.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => new _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  void login() async {
-    var response = await http.get(
-      Uri.parse('https://api.imgur.com/3/image/T0IBWsL'),
-      headers: {'Authorization': 'Client-ID ' + client_id},
-    );
+class _LoginScreenState extends State<LoginPage> {
+  final flutterWebviewPlugin = new FlutterWebviewPlugin();
+  StreamSubscription _onDestroy;
+  StreamSubscription<WebViewStateChanged> _onStateChanged;
 
-    final repStr = jsonDecode(response.body);
+  @override
+  void dispose() {
+    _onDestroy.cancel();
+    _onStateChanged.cancel();
+    flutterWebviewPlugin.dispose();
+    super.dispose();
+  }
 
-    print(repStr);
+  @override
+  void initState() {
+    super.initState();
+
+    flutterWebviewPlugin.close();
+
+    // Add a listener to on destroy WebView, so you can make came actions.
+    _onDestroy = flutterWebviewPlugin.onDestroy.listen((_) {
+      print("destroy");
+    });
+
+    _onStateChanged =
+        flutterWebviewPlugin.onStateChanged.listen((WebViewStateChanged state) {
+      print(state.url);
+      if (state.url.startsWith("https://imgur.com/?state=DEV") ||
+          state.url.startsWith("https://m.imgur.com/?state=DEV")) {
+        RegExp regExp = new RegExp(r"#access_token=(.*)");
+        token = regExp.firstMatch(state.url)?.group(1);
+        token = token.split("&")[0];
+        print("token $token");
+        flutterWebviewPlugin.close();
+        Navigator.of(context).pop(true);
+      }
+    });
+  }
+
+  void login() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => new WebviewScaffold(
+            url: "https://api.imgur.com/oauth2/authorize?client_id=" +
+                client_id +
+                "&response_type=token&state=DEV",
+            appBar: new AppBar(title: new Text("Login to Imgur...")))));
   }
 
   @override
