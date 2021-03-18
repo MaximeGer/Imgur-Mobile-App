@@ -7,16 +7,16 @@ import 'package:epicture/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:epicture/login.dart';
 
-class ComptePage extends StatefulWidget {
-  ComptePage({Key key, this.title}) : super(key: key);
+class SettingsPage extends StatefulWidget {
+  SettingsPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _ComptePageState createState() => _ComptePageState();
+  _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _ComptePageState extends State<ComptePage> {
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +51,7 @@ class _ComptePageState extends State<ComptePage> {
               replacement: Column(
                 children: <Widget>[
                   Text(
-                    "Vous etes sur a page compte",
+                    "Vous etes sur a page settings",
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ],

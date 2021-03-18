@@ -1,5 +1,6 @@
 import 'package:epicture/home.dart';
 import 'package:epicture/login.dart';
+import 'package:epicture/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:epicture/image.dart';
 import 'package:epicture/favoris.dart';
@@ -56,6 +57,33 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Imgur'),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(
+                  Icons.search,
+                  size: 26.0,
+                ),
+              )),
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Icon(Icons.more_vert),
+              )),
+          IconButton(
+            icon: const Icon(Icons.login),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.push(
+                context,
+                new MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: HomePage(),
@@ -67,56 +95,92 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("Navigation"),
               decoration: BoxDecoration(color: Colors.blue),
             ),
-            Visibility(
-                visible: token.isEmpty,
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: new Text("Login"),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => LoginPage()),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                replacement: Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: new Text("Compte"),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => ComptePage()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: new Text("Favorie"),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => FavorisPage()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: new Text("Settings"),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => LoginPage()),
-                        );
-                      },
-                    ),
-                  ],
-                )),
+            ListTile(
+              title: new Text("Login"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+            ),
+            ListTile(
+              title: new Text("Compte"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => ComptePage()),
+                );
+              },
+            ),
+            ListTile(
+              title: new Text("Favorie"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => FavorisPage()),
+                );
+              },
+            ),
+            ListTile(
+              title: new Text("Settings"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => SettingsPage()),
+                );
+              },
+            ),
+            // Visibility(
+            //     visible: token.isEmpty,
+            //     child: Column(
+            //       children: <Widget>[
+            //         ListTile(
+            //           title: new Text("Login"),
+            //           onTap: () {
+            //             Navigator.push(
+            //               context,
+            //               new MaterialPageRoute(
+            //                   builder: (context) => LoginPage()),
+            //             );
+            //           },
+            //         ),
+            //       ],
+            //     ),
+            //     replacement: Column(
+            //       children: <Widget>[
+            //         ListTile(
+            //           title: new Text("Compte"),
+            //           onTap: () {
+            //             Navigator.push(
+            //               context,
+            //               new MaterialPageRoute(
+            //                   builder: (context) => ComptePage()),
+            //             );
+            //           },
+            //         ),
+            //         ListTile(
+            //           title: new Text("Favorie"),
+            //           onTap: () {
+            //             Navigator.push(
+            //               context,
+            //               new MaterialPageRoute(
+            //                   builder: (context) => FavorisPage()),
+            //             );
+            //           },
+            //         ),
+            //         ListTile(
+            //           title: new Text("Settings"),
+            //           onTap: () {
+            //             Navigator.push(
+            //               context,
+            //               new MaterialPageRoute(
+            //                   builder: (context) => LoginPage()),
+            //             );
+            //           },
+            //         ),
+            //       ],
+            //     )),
           ],
         ),
       ),

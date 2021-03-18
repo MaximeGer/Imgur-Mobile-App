@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:epicture/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:epicture/login.dart';
 
 class FavorisPage extends StatefulWidget {
   FavorisPage({Key key, this.title}) : super(key: key);
