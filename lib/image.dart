@@ -42,8 +42,7 @@ class _ImagePageState extends State<ImagePage> {
                                 color: Color(0xFF2c2f34),
                               ),
                               child: Column(children: <Widget>[
-                                Image.network(
-                                    links(snapshot.data[index])),
+                                Image.network(links(snapshot.data[index])),
                                 Padding(
                                   padding: EdgeInsets.only(
                                     top: 15,
