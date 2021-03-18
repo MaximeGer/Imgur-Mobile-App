@@ -15,6 +15,16 @@ String likes(Map<dynamic, dynamic> gallery) {
   return likes.toString() + "k";
 }
 
+String comment(Map<dynamic, dynamic> gallery) {
+  if (gallery['comment_count'] == null) {
+    return "0";
+  } else if (gallery['comment_count'] < 1000) {
+    return gallery["comment_count"].toString();
+  }
+  var likes = (gallery["comment_count"] / 1000).floor();
+  return likes.toString() + "k";
+}
+
 String links(Map<dynamic, dynamic> gallery) {
   //+ "." + snapshot.data[index]["type"].split("/")[1]
   return gallery["images"] == null

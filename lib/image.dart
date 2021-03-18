@@ -55,11 +55,23 @@ class _ImagePageState extends State<ImagePage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      IconButton(
-                                        icon: const Icon(Icons.message),
-                                        color: Color(0xFF8e9094),
-                                        iconSize: 24.0,
-                                        onPressed: () {},
+                                      Flex(
+                                        direction: Axis.vertical,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          IconButton(
+                                            icon: const Icon(Icons.message),
+                                            color: Color(0xFF8e9094),
+                                            iconSize: 24.0,
+                                            onPressed: () {},
+                                          ),
+                                          Text(
+                                            comment(snapshot.data[index]),
+                                            style: TextStyle(
+                                                color: Color(0xFF8e9094)),
+                                          )
+                                        ],
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.star),
