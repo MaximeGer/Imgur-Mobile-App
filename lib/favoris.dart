@@ -14,9 +14,7 @@ class _FavorisPageState extends State<FavorisPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Favoris Image'),
-      ),
+      appBar: AppBar(),
       body: Container(
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
@@ -93,42 +91,3 @@ class _FavorisPageState extends State<FavorisPage> {
     );
   }
 }
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//     body: Container(
-//       width: double.infinity,
-//       decoration: BoxDecoration(
-//           //color: Color(0xFF141518),
-//           ),
-//       child: Column(
-//         children: <Widget>[
-//           ElevatedButton(
-//             style: ElevatedButton.styleFrom(
-//               primary: Color(0xFF1bb76e), // background
-//               onPrimary: Colors.white, // foreground
-//               textStyle: TextStyle(fontSize: 18),
-//               minimumSize: Size(150, 45),
-//             ),
-//             onPressed: image,
-//             child: Text(
-//               'homeData',
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class Image {
-//   String id;
-//   String title;
-//   String description;
-//   int datetime;
-//   String type;
-//   int views;
-//   String link;
-//   Image(this.id, this.title, this.description, this.datetime, this.type,
-//       this.views, this.link);
-// }

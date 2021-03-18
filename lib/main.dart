@@ -1,12 +1,12 @@
-import 'dart:convert';
+
 import 'package:epicture/home.dart';
 import 'package:epicture/login.dart';
 import 'package:epicture/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:epicture/image.dart';
+
 import 'package:epicture/favoris.dart';
 import 'package:epicture/compte.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:english_words/english_words.dart';
 
 void main() {
