@@ -29,6 +29,6 @@ Future<List<dynamic>> fetch(
   if (result.statusCode == 200) {
     return json.decode(result.body)['data'];
   } else {
-    return null;
+    return ["ErrorCode : ${result.statusCode}"];
   }
 }
