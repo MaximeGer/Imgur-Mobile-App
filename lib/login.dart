@@ -42,8 +42,10 @@ class _LoginScreenState extends State<LoginPage> {
         token = regExp.firstMatch(state.url)?.group(1);
         token = token.split("&")[0];
         print("token $token");
-        flutterWebviewPlugin.close();
         Navigator.of(context).pop(true);
+        Navigator.of(context).push(
+          new MaterialPageRoute(builder: (context) => MyHomePage()),
+        );
       }
     });
   }
