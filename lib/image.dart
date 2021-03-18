@@ -20,7 +20,7 @@ class _ImagePageState extends State<ImagePage> {
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
                 //'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false'
-                mot.isEmpty
+                mot.isNotEmpty
                     ? 'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false'
                     : 'https://api.imgur.com/3/search/hot/viral/day/0?q=cats',
                 {"Authorization": 'Client-ID ' + clientId}),
