@@ -24,8 +24,8 @@ class _ImagePageState extends State<ImagePage> {
       body: Container(
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
-                'https://api.imgur.com/3/gallery/hot/viral/day/1?showViral=true&mature=true&album_previews=false',
-                {"Authorization": 'Client-ID ' + client_id}),
+                'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false',
+                {"Authorization": 'Client-ID ' + clientId}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 snapshot.data.removeWhere((i) => ((i["images"] != null &&
@@ -42,7 +42,8 @@ class _ImagePageState extends State<ImagePage> {
                                 color: Color(0xFF2c2f34),
                               ),
                               child: Column(children: <Widget>[
-                                Image.network(links(snapshot.data[index])),
+                                Image.network(
+                                    links(snapshot.data[index])),
                                 Padding(
                                   padding: EdgeInsets.only(
                                     top: 15,

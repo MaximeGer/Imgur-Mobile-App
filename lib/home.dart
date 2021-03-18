@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:epicture/image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'imports.dart';
 import 'package:english_words/english_words.dart';
-
-var client_id = "761207468cb80bd";
-var token = "";
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -21,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   void homeData() async {
     var response = await http.get(
       Uri.parse('https://api.imgur.com/3/image/T0IBWsL'),
-      headers: {'Authorization': 'Client-ID ' + client_id},
+      headers: {'Authorization': 'Client-ID ' + clientId},
     );
 
     final repStr = jsonDecode(response.body);

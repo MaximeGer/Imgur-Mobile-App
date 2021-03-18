@@ -1,6 +1,10 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+var clientId = "761207468cb80bd";
+var token = "";
+var username = "";
+
 String likes(Map<dynamic, dynamic> gallery) {
   if (gallery['ups'] == null) {
     return "0";
@@ -12,9 +16,11 @@ String likes(Map<dynamic, dynamic> gallery) {
 }
 
 String links(Map<dynamic, dynamic> gallery) {
-  return gallery["images"][0]["link"].toString();
+  //+ "." + snapshot.data[index]["type"].split("/")[1]
+  return gallery["images"] == null
+      ? "https://i.imgur.com/${gallery['cover']}.${gallery['type'].split("/")[1]}"
+      : gallery["images"][0]["link"].toString();
 }
-
 
 Future<List<dynamic>> fetch(
     String url, Map<String, String> headersParams) async {

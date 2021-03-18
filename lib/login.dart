@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:epicture/main.dart';
-import 'package:epicture/home.dart';
+import 'package:epicture/imports.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,10 +38,14 @@ class _LoginScreenState extends State<LoginPage> {
       print(state.url);
       if (state.url.startsWith("https://imgur.com/?state=DEV") ||
           state.url.startsWith("https://m.imgur.com/?state=DEV")) {
-        RegExp regExp = new RegExp(r"#access_token=(.*)");
-        token = regExp.firstMatch(state.url)?.group(1);
+        RegExp regExpToken = new RegExp(r"#access_token=(.*)");
+        RegExp regExpUsername = new RegExp(r"&account_username=(.*)");
+        token = regExpToken.firstMatch(state.url)?.group(1);
         token = token.split("&")[0];
+        username = regExpUsername.firstMatch(state.url)?.group(1);
+        username = username.split("&")[0];
         print("token $token");
+        print("username $username");
         Navigator.of(context).pop(true);
         Navigator.of(context).push(
           new MaterialPageRoute(builder: (context) => MyHomePage()),
@@ -54,7 +58,7 @@ class _LoginScreenState extends State<LoginPage> {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) => new WebviewScaffold(
             url: "https://api.imgur.com/oauth2/authorize?client_id=" +
-                client_id +
+                clientId +
                 "&response_type=token&state=DEV",
             appBar: new AppBar(title: new Text("Login to Imgur...")))));
   }
