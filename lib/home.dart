@@ -1,11 +1,10 @@
 import 'dart:convert';
 
+import 'package:epicture/image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'imports.dart';
 import 'package:english_words/english_words.dart';
-
-var client_id = "761207468cb80bd";
-var token = "";
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -20,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   void homeData() async {
     var response = await http.get(
       Uri.parse('https://api.imgur.com/3/image/T0IBWsL'),
-      headers: {'Authorization': 'Client-ID ' + client_id},
+      headers: {'Authorization': 'Client-ID ' + clientId},
     );
 
     final repStr = jsonDecode(response.body);
@@ -30,7 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: RandomWords()
+    return Scaffold(body: ImagePage()
         // Container(
         //   width: double.infinity,
         //   decoration: BoxDecoration(
@@ -64,45 +63,5 @@ class _HomePageState extends State<HomePage> {
         //   ),
         // ),
         );
-  }
-}
-
-class RandomWords extends StatefulWidget {
-  @override
-  _RandomWordsState createState() => _RandomWordsState();
-}
-
-class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _biggerFont = TextStyle(fontSize: 18.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildSuggestions(),
-    );
-  }
-
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-          }
-          return _buildRow(_suggestions[index]);
-        });
-  }
-
-  Widget _buildRow(WordPair pair) {
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-    );
   }
 }

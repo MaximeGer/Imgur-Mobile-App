@@ -1,31 +1,25 @@
-import 'dart:convert';
-import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:epicture/home.dart';
 import 'package:epicture/imports.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 
-class ImagePage extends StatefulWidget {
-  ImagePage({Key key, this.title}) : super(key: key);
+class FavorisPage extends StatefulWidget {
+  FavorisPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _ImagePageState createState() => _ImagePageState();
+  _FavorisPageState createState() => _FavorisPageState();
 }
 
-class _ImagePageState extends State<ImagePage> {
-  final imageList = <Image>[];
-
+class _FavorisPageState extends State<FavorisPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Container(
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
-                'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false',
-                {"Authorization": 'Client-ID ' + clientId}),
+                "https://api.imgur.com/3/account/$username/favorites/0/newest",
+                {"Authorization": "Bearer $token"}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 snapshot.data.removeWhere((i) => ((i["images"] != null &&
@@ -42,8 +36,7 @@ class _ImagePageState extends State<ImagePage> {
                                 color: Color(0xFF2c2f34),
                               ),
                               child: Column(children: <Widget>[
-                                Image.network(
-                                    links(snapshot.data[index])),
+                                Image.network(links(snapshot.data[index])),
                                 Padding(
                                   padding: EdgeInsets.only(
                                     top: 15,
