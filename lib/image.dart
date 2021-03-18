@@ -11,13 +11,18 @@ class ImagePage extends StatefulWidget {
 }
 
 class _ImagePageState extends State<ImagePage> {
+  String mot = "test";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
-                'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false',
+                //'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false'
+                mot.isEmpty
+                    ? 'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false'
+                    : 'https://api.imgur.com/3/search/hot/viral/day/0?q=cats',
                 {"Authorization": 'Client-ID ' + clientId}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
