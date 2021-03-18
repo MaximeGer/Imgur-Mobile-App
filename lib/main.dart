@@ -1,4 +1,3 @@
-
 import 'package:epicture/home.dart';
 import 'package:epicture/login.dart';
 import 'package:epicture/settings.dart';
@@ -7,12 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:epicture/favoris.dart';
 import 'package:epicture/compte.dart';
 
-import 'package:english_words/english_words.dart';
-
 void main() {
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -46,7 +42,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool test = false;
 
   @override
   Widget build(BuildContext context) {
@@ -133,56 +128,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            // Visibility(
-            //     visible: token.isEmpty,
-            //     child: Column(
-            //       children: <Widget>[
-            //         ListTile(
-            //           title: new Text("Login"),
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               new MaterialPageRoute(
-            //                   builder: (context) => LoginPage()),
-            //             );
-            //           },
-            //         ),
-            //       ],
-            //     ),
-            //     replacement: Column(
-            //       children: <Widget>[
-            //         ListTile(
-            //           title: new Text("Compte"),
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               new MaterialPageRoute(
-            //                   builder: (context) => ComptePage()),
-            //             );
-            //           },
-            //         ),
-            //         ListTile(
-            //           title: new Text("Favorie"),
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               new MaterialPageRoute(
-            //                   builder: (context) => FavorisPage()),
-            //             );
-            //           },
-            //         ),
-            //         ListTile(
-            //           title: new Text("Settings"),
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               new MaterialPageRoute(
-            //                   builder: (context) => LoginPage()),
-            //             );
-            //           },
-            //         ),
-            //       ],
-            //     )),
           ],
         ),
       ),
@@ -190,96 +135,3 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class RandomWords extends StatefulWidget {
-  @override
-  _RandomWordsState createState() => _RandomWordsState();
-}
-
-class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _saved = <WordPair>{};
-  final _biggerFont = TextStyle(fontSize: 18.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Startup Name Generator'),
-        actions: [
-          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
-        ],
-      ),
-      body: _buildSuggestions(),
-    );
-  }
-
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-          }
-          return _buildRow(_suggestions[index]);
-        });
-  }
-
-  Widget _buildRow(WordPair pair) {
-    final alreadySaved = _saved.contains(pair);
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-      trailing: Icon(
-        // NEW from here...
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {
-        // NEW lines from here...
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
-        });
-      },
-    );
-  }
-
-  void _pushSaved() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        // NEW lines from here...
-        builder: (BuildContext context) {
-          final tiles = _saved.map(
-            (WordPair pair) {
-              return ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
-                ),
-              );
-            },
-          );
-          final divided = ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList();
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Saved Suggestions'),
-            ),
-            body: ListView(children: divided),
-          );
-        }, // ...to here.
-      ),
-    );
-  }
-}

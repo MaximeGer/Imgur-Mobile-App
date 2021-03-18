@@ -1,10 +1,5 @@
-import 'dart:convert';
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:epicture/home.dart';
 import 'package:epicture/imports.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ImagePage extends StatefulWidget {
   ImagePage({Key key, this.title}) : super(key: key);
@@ -16,8 +11,6 @@ class ImagePage extends StatefulWidget {
 }
 
 class _ImagePageState extends State<ImagePage> {
-  final imageList = <Image>[];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
