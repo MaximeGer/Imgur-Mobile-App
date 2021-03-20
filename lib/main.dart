@@ -1,6 +1,7 @@
 import 'package:epicture/home.dart';
 import 'package:epicture/login.dart';
 import 'package:epicture/settings.dart';
+import 'package:epicture/upload.dart';
 import 'package:flutter/material.dart';
 
 import 'package:epicture/favoris.dart';
@@ -10,7 +11,9 @@ import 'package:epicture/image.dart';
 void main() {
   runApp(MyApp());
 }
+
   String search = "";
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -132,6 +135,66 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+
+            ListTile(
+              title: new Text("Upload"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => UploadPage()),
+                );
+              },
+            ),
+            // Visibility(
+            //     visible: token.isEmpty,
+            //     child: Column(
+            //       children: <Widget>[
+            //         ListTile(
+            //           title: new Text("Login"),
+            //           onTap: () {
+            //             Navigator.push(
+            //               context,
+            //               new MaterialPageRoute(
+            //                   builder: (context) => LoginPage()),
+            //             );
+            //           },
+            //         ),
+            //       ],
+            //     ),
+            //     replacement: Column(
+            //       children: <Widget>[
+            //         ListTile(
+            //           title: new Text("Compte"),
+            //           onTap: () {
+            //             Navigator.push(
+            //               context,
+            //               new MaterialPageRoute(
+            //                   builder: (context) => ComptePage()),
+            //             );
+            //           },
+            //         ),
+            //         ListTile(
+            //           title: new Text("Favorie"),
+            //           onTap: () {
+            //             Navigator.push(
+            //               context,
+            //               new MaterialPageRoute(
+            //                   builder: (context) => FavorisPage()),
+            //             );
+            //           },
+            //         ),
+            //         ListTile(
+            //           title: new Text("Settings"),
+            //           onTap: () {
+            //             Navigator.push(
+            //               context,
+            //               new MaterialPageRoute(
+            //                   builder: (context) => LoginPage()),
+            //             );
+            //           },
+            //         ),
+            //       ],
+            //     )),
           ],
         ),
       ),
