@@ -28,12 +28,12 @@ class _UploadPageState extends State<UploadPage> {
   }
 
   PickedFile imageFile;
+  var bytesImage;
 
   _openGallery(BuildContext context) async {
     var picture = await ImagePicker().getImage(source: ImageSource.gallery);
     this.setState(() {
       imageFile = picture;
-      print(imageFile);
     });
     Navigator.of(context).pop();
   }
@@ -42,7 +42,6 @@ class _UploadPageState extends State<UploadPage> {
     var picture = await ImagePicker().getImage(source: ImageSource.camera);
     this.setState(() {
       imageFile = picture;
-      print(imageFile);
     });
     Navigator.of(context).pop();
   }
@@ -80,17 +79,9 @@ class _UploadPageState extends State<UploadPage> {
     if (imageFile == null) {
       return Text("No Image Selected");
     } else {
-      Image.file(File(imageFile.path), width: 400, height: 400);
+      return Image.file(File(imageFile.path), width: 400, height: 400);
     }
   }
-
-  // PickedFile imageFile;
-  // Future getImage(int type) async {
-  //   PickedFile pickedImage = await ImagePicker().getImage(
-  //       source: type == 1 ? ImageSource.camera : ImageSource.gallery,
-  //       imageQuality: 50);
-  //   return pickedImage;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +98,29 @@ class _UploadPageState extends State<UploadPage> {
                   _showChoiceDialog(context);
                 },
                 child: Text("Select Image"),
+              ),
+              Column(
+                children: <Widget>[
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF1bb76e), // background
+                      onPrimary: Colors.white, // foreground
+                      textStyle: TextStyle(fontSize: 18),
+                      minimumSize: Size(150, 45),
+                    ),
+                    onPressed: () {
+                      bytesImage =
+                          base64.encode(File(imageFile.path).readAsBytesSync());
+
+                      print(bytesImage);
+                      print(upload(
+                          bytesImage, {"Authorization": "Bearer $token"}));
+                    },
+                    child: Text(
+                      'Post Image Url on Imgur',
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
