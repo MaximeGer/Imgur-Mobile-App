@@ -22,7 +22,7 @@ class _FavorisPageState extends State<FavorisPage> {
                 {"Authorization": "Bearer $token"}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               print("snapshot:$snapshot");
-              if (snapshot.hasData) {
+              if (snapshot.hasData && token.isNotEmpty) {
                 snapshot.data.removeWhere((i) => ((i["images"] != null &&
                         i["images"].length != 0 &&
                         i["images"][0]["type"].contains('mp4')) ||
@@ -98,7 +98,8 @@ class _FavorisPageState extends State<FavorisPage> {
                               ])));
                     });
               } else
-                return Card(child: Text("Pas d'images retrouvées"));
+                return Card(
+                    child: Text("Pas d'images retrouvées. Connectez-vous!!!"));
             }),
       ),
     );

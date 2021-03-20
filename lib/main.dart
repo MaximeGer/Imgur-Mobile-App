@@ -5,13 +5,16 @@ import 'package:flutter/material.dart';
 
 import 'package:epicture/favoris.dart';
 import 'package:epicture/compte.dart';
+import 'package:epicture/image.dart';
 
 void main() {
   runApp(MyApp());
 }
+  String search = "";
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,31 +46,42 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    _filter.addListener(() {
+      search = _filter.text;
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  final TextEditingController _filter = new TextEditingController();
+  Icon _searchIcon = new Icon(Icons.search);
+  Widget _appBarTitle = Text('Imgur');
+  @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        title: Text('Imgur'),
+        title: _appBarTitle,
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.search,
-                  size: 26.0,
-                ),
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: Icon(Icons.more_vert),
+                onTap: () {
+                  setState(() {
+                    if (this._searchIcon.icon == Icons.search) {
+                      this._searchIcon = new Icon(Icons.close);
+                      this._appBarTitle = new TextField(
+                        controller: _filter,
+                        decoration: new InputDecoration(hintText: 'Search...'),
+                      );
+                    } else {
+                      this._searchIcon = new Icon(Icons.search);
+                      this._appBarTitle = new Text('Imgur');
+                      _filter.clear();
+                    }
+                  });
+                },
+                child: _searchIcon,
               )),
           IconButton(
             icon: const Icon(Icons.login),
@@ -101,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: new Text("Favorie"),
+              title: new Text("Favoris"),
               onTap: () {
                 Navigator.push(
                   context,

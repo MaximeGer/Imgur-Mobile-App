@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:epicture/imports.dart';
+import 'package:epicture/main.dart';
 
 class ImagePage extends StatefulWidget {
   ImagePage({Key key, this.title}) : super(key: key);
@@ -11,8 +12,6 @@ class ImagePage extends StatefulWidget {
 }
 
 class _ImagePageState extends State<ImagePage> {
-  String mot = "test";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +19,9 @@ class _ImagePageState extends State<ImagePage> {
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
                 //'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false'
-                mot.trim() != ""
-                    ? 'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false'
-                    : 'https://api.imgur.com/3/search/hot/viral/day/0?q=cats',
+                search.trim().isNotEmpty
+                    ? 'https://api.imgur.com/3/gallery/search/viral/day/0?q=$search'
+                    : 'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false',
                 {"Authorization": 'Client-ID ' + clientId}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {

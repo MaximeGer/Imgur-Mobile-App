@@ -22,7 +22,7 @@ class _ComptePageState extends State<ComptePage> {
             future: fetch('https://api.imgur.com/3/account/me/images',
                 {"Authorization": "Bearer $token"}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
+              if (snapshot.hasData && token.isNotEmpty) {
                 // snapshot.data.removeWhere((i) => ((i != null &&
                 //         i["images"].length != 0 &&
                 //         i["images"][0]["type"].contains('mp4')) ||
@@ -98,7 +98,8 @@ class _ComptePageState extends State<ComptePage> {
                               ])));
                     });
               } else
-                return Card(child: Text("Pas d'images retrouvées"));
+                return Card(
+                    child: Text("Pas d'images retrouvées. Connectez-vous!!!"));
             }),
       ),
     );
