@@ -1,21 +1,23 @@
-
 import 'package:epicture/home.dart';
 import 'package:epicture/login.dart';
 import 'package:epicture/settings.dart';
+import 'package:epicture/upload.dart';
 import 'package:flutter/material.dart';
 
 import 'package:epicture/favoris.dart';
 import 'package:epicture/compte.dart';
-
-import 'package:english_words/english_words.dart';
+import 'package:epicture/image.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+  String search = "";
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,34 +48,43 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool test = false;
+  @override
+  void initState() {
+    _filter.addListener(() {
+      search = _filter.text;
+      setState(() {});
+    });
+    super.initState();
+  }
 
+  final TextEditingController _filter = new TextEditingController();
+  Icon _searchIcon = new Icon(Icons.search);
+  Widget _appBarTitle = Text('Imgur');
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        title: Text('Imgur'),
+        title: _appBarTitle,
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.search,
-                  size: 26.0,
-                ),
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: Icon(Icons.more_vert),
+                onTap: () {
+                  setState(() {
+                    if (this._searchIcon.icon == Icons.search) {
+                      this._searchIcon = new Icon(Icons.close);
+                      this._appBarTitle = new TextField(
+                        controller: _filter,
+                        decoration: new InputDecoration(hintText: 'Search...'),
+                      );
+                    } else {
+                      this._searchIcon = new Icon(Icons.search);
+                      this._appBarTitle = new Text('Imgur');
+                      _filter.clear();
+                    }
+                  });
+                },
+                child: _searchIcon,
               )),
           IconButton(
             icon: const Icon(Icons.login),
@@ -98,15 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(color: Colors.blue),
             ),
             ListTile(
-              title: new Text("Login"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-            ),
-            ListTile(
               title: new Text("Compte"),
               onTap: () {
                 Navigator.push(
@@ -116,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: new Text("Favorie"),
+              title: new Text("Favoris"),
               onTap: () {
                 Navigator.push(
                   context,
@@ -130,6 +132,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   new MaterialPageRoute(builder: (context) => SettingsPage()),
+                );
+              },
+            ),
+
+            ListTile(
+              title: new Text("Upload"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => UploadPage()),
                 );
               },
             ),
@@ -185,100 +197,6 @@ class _MyHomePageState extends State<MyHomePage> {
             //     )),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class RandomWords extends StatefulWidget {
-  @override
-  _RandomWordsState createState() => _RandomWordsState();
-}
-
-class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _saved = <WordPair>{};
-  final _biggerFont = TextStyle(fontSize: 18.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Startup Name Generator'),
-        actions: [
-          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
-        ],
-      ),
-      body: _buildSuggestions(),
-    );
-  }
-
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-          }
-          return _buildRow(_suggestions[index]);
-        });
-  }
-
-  Widget _buildRow(WordPair pair) {
-    final alreadySaved = _saved.contains(pair);
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-      trailing: Icon(
-        // NEW from here...
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {
-        // NEW lines from here...
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
-        });
-      },
-    );
-  }
-
-  void _pushSaved() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        // NEW lines from here...
-        builder: (BuildContext context) {
-          final tiles = _saved.map(
-            (WordPair pair) {
-              return ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
-                ),
-              );
-            },
-          );
-          final divided = ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList();
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Saved Suggestions'),
-            ),
-            body: ListView(children: divided),
-          );
-        }, // ...to here.
       ),
     );
   }

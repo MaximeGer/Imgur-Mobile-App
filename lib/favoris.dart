@@ -21,7 +21,8 @@ class _FavorisPageState extends State<FavorisPage> {
                 "https://api.imgur.com/3/account/$username/favorites/0/newest",
                 {"Authorization": "Bearer $token"}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
+              print("snapshot:$snapshot");
+              if (snapshot.hasData && token.isNotEmpty) {
                 snapshot.data.removeWhere((i) => ((i["images"] != null &&
                         i["images"].length != 0 &&
                         i["images"][0]["type"].contains('mp4')) ||
@@ -49,11 +50,23 @@ class _FavorisPageState extends State<FavorisPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      IconButton(
-                                        icon: const Icon(Icons.message),
-                                        color: Color(0xFF8e9094),
-                                        iconSize: 24.0,
-                                        onPressed: () {},
+                                      Flex(
+                                        direction: Axis.vertical,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          IconButton(
+                                            icon: const Icon(Icons.message),
+                                            color: Color(0xFF8e9094),
+                                            iconSize: 24.0,
+                                            onPressed: () {},
+                                          ),
+                                          Text(
+                                            comment(snapshot.data[index]),
+                                            style: TextStyle(
+                                                color: Color(0xFF8e9094)),
+                                          )
+                                        ],
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.star),
@@ -85,7 +98,8 @@ class _FavorisPageState extends State<FavorisPage> {
                               ])));
                     });
               } else
-                return Card(child: Text("Pas d'images retrouvées"));
+                return Card(
+                    child: Text("Pas d'images retrouvées. Connectez-vous!!!"));
             }),
       ),
     );

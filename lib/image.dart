@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:epicture/home.dart';
 import 'package:epicture/imports.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:epicture/main.dart';
 
 class ImagePage extends StatefulWidget {
   ImagePage({Key key, this.title}) : super(key: key);
@@ -16,15 +12,16 @@ class ImagePage extends StatefulWidget {
 }
 
 class _ImagePageState extends State<ImagePage> {
-  final imageList = <Image>[];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
-                'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false',
+                //'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false'
+                search.trim().isNotEmpty
+                    ? 'https://api.imgur.com/3/gallery/search/viral/day/0?q=$search'
+                    : 'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false',
                 {"Authorization": 'Client-ID ' + clientId}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
@@ -55,11 +52,23 @@ class _ImagePageState extends State<ImagePage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      IconButton(
-                                        icon: const Icon(Icons.message),
-                                        color: Color(0xFF8e9094),
-                                        iconSize: 24.0,
-                                        onPressed: () {},
+                                      Flex(
+                                        direction: Axis.vertical,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          IconButton(
+                                            icon: const Icon(Icons.message),
+                                            color: Color(0xFF8e9094),
+                                            iconSize: 24.0,
+                                            onPressed: () {},
+                                          ),
+                                          Text(
+                                            comment(snapshot.data[index]),
+                                            style: TextStyle(
+                                                color: Color(0xFF8e9094)),
+                                          )
+                                        ],
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.star),
