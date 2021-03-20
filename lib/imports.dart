@@ -27,9 +27,20 @@ String comment(Map<dynamic, dynamic> gallery) {
 
 String links(Map<dynamic, dynamic> gallery) {
   //+ "." + snapshot.data[index]["type"].split("/")[1]
-  return gallery["images"] == null
-      ? "https://i.imgur.com/${gallery['cover']}.${gallery['type'].split("/")[1]}"
-      : gallery["images"][0]["link"].toString();
+  // return gallery["images"] == null
+  //     ? "https://i.imgur.com/${gallery['cover']}.${gallery['type'].split("/")[1]}"
+  //     : gallery["images"][0]["link"].toString();
+  print("gallery:$gallery");
+  if (gallery["images"] == null) {
+    if (gallery['cover'] == null) {
+      print(gallery["link"].toString());
+      return gallery["link"].toString();
+    } else {
+      return "https://i.imgur.com/${gallery['cover']}.${gallery['type'].split("/")[1]}";
+    }
+  } else {
+    return gallery["images"][0]["link"].toString();
+  }
 }
 
 Future<List<dynamic>> fetch(
