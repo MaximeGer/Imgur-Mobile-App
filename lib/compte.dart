@@ -19,14 +19,14 @@ class _ComptePageState extends State<ComptePage> {
       appBar: AppBar(),
       body: Container(
         child: FutureBuilder<List<dynamic>>(
-            future: fetch("https://api.imgur.com/3/account/me/images",
+            future: fetch('https://api.imgur.com/3/account/me/images',
                 {"Authorization": "Bearer $token"}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                snapshot.data.removeWhere((i) => ((i["images"] != null &&
-                        i["images"].length != 0 &&
-                        i["images"][0]["type"].contains('mp4')) ||
-                    (i["cover"] == null)));
+                // snapshot.data.removeWhere((i) => ((i != null &&
+                //         i["images"].length != 0 &&
+                //         i["images"][0]["type"].contains('mp4')) ||
+                //     (i["cover"] == null)));
                 return ListView.builder(
                     padding: EdgeInsets.all(8),
                     itemCount: snapshot.data.length,
