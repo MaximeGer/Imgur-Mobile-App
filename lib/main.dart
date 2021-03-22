@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:epicture/favoris.dart';
 import 'package:epicture/compte.dart';
 import 'package:epicture/image.dart';
+import 'package:epicture/imports.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-  String search = "";
-
+String search = "";
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -90,10 +90,17 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.login),
             color: Colors.white,
             onPressed: () {
-              Navigator.push(
-                context,
-                new MaterialPageRoute(builder: (context) => LoginPage()),
-              );
+              if (token.isEmpty) {
+                Navigator.push(
+                  context,
+                  new MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              } else {
+                token = "";
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("Disconnecting..."),
+                ));
+              }
             },
           ),
         ],
