@@ -122,7 +122,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     direction: Axis.horizontal,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Text("Navigation"),
+                      Text(
+                        "Navigation",
+                        style: TextStyle(fontSize: 19, color: Colors.white),
+                      ),
                     ],
                   ),
                   decoration: BoxDecoration(color: Color(0xFF1bb76e)),
