@@ -12,6 +12,9 @@ class ImagePage extends StatefulWidget {
 }
 
 class _ImagePageState extends State<ImagePage> {
+  Color iconColorFavoris = Color(0xFF8e9094);
+  Color iconColorLike = Color(0xFF8e9094);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,9 +75,19 @@ class _ImagePageState extends State<ImagePage> {
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.star),
-                                        color: Color(0xFF8e9094),
+                                        color: iconColorFavoris,
                                         iconSize: 24.0,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            if (iconColorFavoris ==
+                                                Color(0xFF8e9094)) {
+                                              iconColorFavoris = Colors.yellow;
+                                            } else {
+                                              iconColorFavoris =
+                                                  Color(0xFF8e9094);
+                                            }
+                                          });
+                                        },
                                       ),
                                       Flex(
                                         direction: Axis.vertical,
@@ -83,9 +96,19 @@ class _ImagePageState extends State<ImagePage> {
                                         children: <Widget>[
                                           IconButton(
                                             icon: const Icon(Icons.favorite),
-                                            color: Color(0xFF8e9094),
+                                            color: iconColorLike,
                                             iconSize: 24.0,
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              setState(() {
+                                                if (iconColorLike ==
+                                                    Color(0xFF8e9094)) {
+                                                  iconColorLike = Colors.red;
+                                                } else {
+                                                  iconColorLike =
+                                                      Color(0xFF8e9094);
+                                                }
+                                              });
+                                            },
                                           ),
                                           Text(
                                             likes(snapshot.data[index]),
