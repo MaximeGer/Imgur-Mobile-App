@@ -63,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFF1bb76e),
         title: _appBarTitle,
         actions: <Widget>[
           Padding(
@@ -107,101 +108,76 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: HomePage(),
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            DrawerHeader(
-              child: Text("Navigation"),
-              decoration: BoxDecoration(color: Colors.blue),
-            ),
-            ListTile(
-              title: new Text("Compte"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(builder: (context) => ComptePage()),
-                );
-              },
-            ),
-            ListTile(
-              title: new Text("Favoris"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(builder: (context) => FavorisPage()),
-                );
-              },
-            ),
-            ListTile(
-              title: new Text("Settings"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(builder: (context) => SettingsPage()),
-                );
-              },
-            ),
-
-            ListTile(
-              title: new Text("Upload"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(builder: (context) => UploadPage()),
-                );
-              },
-            ),
-            // Visibility(
-            //     visible: token.isEmpty,
-            //     child: Column(
-            //       children: <Widget>[
-            //         ListTile(
-            //           title: new Text("Login"),
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               new MaterialPageRoute(
-            //                   builder: (context) => LoginPage()),
-            //             );
-            //           },
-            //         ),
-            //       ],
-            //     ),
-            //     replacement: Column(
-            //       children: <Widget>[
-            //         ListTile(
-            //           title: new Text("Compte"),
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               new MaterialPageRoute(
-            //                   builder: (context) => ComptePage()),
-            //             );
-            //           },
-            //         ),
-            //         ListTile(
-            //           title: new Text("Favorie"),
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               new MaterialPageRoute(
-            //                   builder: (context) => FavorisPage()),
-            //             );
-            //           },
-            //         ),
-            //         ListTile(
-            //           title: new Text("Settings"),
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               new MaterialPageRoute(
-            //                   builder: (context) => LoginPage()),
-            //             );
-            //           },
-            //         ),
-            //       ],
-            //     )),
-          ],
+      drawer: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Color(0xFF474a51),
+        ),
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              Container(
+                height: 65,
+                child: DrawerHeader(
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text("Navigation"),
+                    ],
+                  ),
+                  decoration: BoxDecoration(color: Color(0xFF1bb76e)),
+                ),
+              ),
+              ListTile(
+                title: new Text(
+                  "Compte",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(builder: (context) => ComptePage()),
+                  );
+                },
+              ),
+              ListTile(
+                title: new Text(
+                  "Favoris",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(builder: (context) => FavorisPage()),
+                  );
+                },
+              ),
+              ListTile(
+                title: new Text(
+                  "Settings",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(builder: (context) => SettingsPage()),
+                  );
+                },
+              ),
+              ListTile(
+                title: new Text(
+                  "Upload",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(builder: (context) => UploadPage()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
