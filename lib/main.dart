@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'package:epicture/favoris.dart';
 import 'package:epicture/compte.dart';
-import 'package:epicture/image.dart';
 import 'package:epicture/imports.dart';
 
 void main() {
