@@ -114,7 +114,7 @@ class _UploadPageState extends State<UploadPage> {
 
                       print(bytesImage);
                       print(upload(
-                          bytesImage, {"Authorization": "Bearer $token"}));
+                          bytesImage, token.isEmpty ? {"Authorization": "Client-ID $clientId"} : {"Authorization": "Bearer $token"}));
                     },
                     child: Text(
                       'Post Image Url on Imgur',
