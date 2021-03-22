@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:epicture/imports.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:epicture/login.dart';
-import 'package:image_picker/image_picker.dart';
 
 class UploadPage extends StatefulWidget {
   UploadPage({Key key, this.title}) : super(key: key);
@@ -77,7 +74,8 @@ class _UploadPageState extends State<UploadPage> {
 
   Widget _decideImageView() {
     if (imageFile == null) {
-      return Text("No Image Selected");
+      return Text("No Image Selected",
+      style: TextStyle(color: Colors.white),);
     } else {
       return Image.file(File(imageFile.path), width: 400, height: 400);
     }
@@ -93,7 +91,7 @@ class _UploadPageState extends State<UploadPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               _decideImageView(),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   _showChoiceDialog(context);
                 },
@@ -114,7 +112,7 @@ class _UploadPageState extends State<UploadPage> {
 
                       print(bytesImage);
                       print(upload(
-                          bytesImage, {"Authorization": "Bearer $token"}));
+                          bytesImage, token.isEmpty ? {"Authorization": "Client-ID $clientId"} : {"Authorization": "Bearer $token"}));
                     },
                     child: Text(
                       'Post Image Url on Imgur',

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:epicture/imports.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:epicture/login.dart';
 
 class ComptePage extends StatefulWidget {
   ComptePage({Key key, this.title}) : super(key: key);
