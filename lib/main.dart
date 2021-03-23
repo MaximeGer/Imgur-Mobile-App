@@ -13,6 +13,7 @@ void main() {
 }
 
 String search = "";
+String filter = "viral";
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -49,14 +50,70 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
-    _filter.addListener(() {
-      search = _filter.text;
+    _filterListener.addListener(() {
+      search = _filterListener.text;
       setState(() {});
     });
     super.initState();
   }
 
-  final TextEditingController _filter = new TextEditingController();
+  Widget myPopMenu() {
+    return PopupMenuButton(
+        icon: Icon(Icons.filter_alt),
+        onSelected: (value) {
+          setState(() {
+            switch (value) {
+              case 1:
+                filter = "viral";
+                break;
+              case 2:
+                filter = "top";
+                break;
+              case 3:
+                filter = "time";
+                break;
+              default:
+            }
+          });
+        },
+        itemBuilder: (context) => [
+              PopupMenuItem(
+                  value: 1,
+                  child: Row(
+                    children: <Widget>[
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                      //   child: Icon(Icons.print),
+                      // ),
+                      Text('Viral')
+                    ],
+                  )),
+              PopupMenuItem(
+                  value: 2,
+                  child: Row(
+                    children: <Widget>[
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                      //   child: Icon(Icons.share),
+                      // ),
+                      Text('Top')
+                    ],
+                  )),
+              PopupMenuItem(
+                  value: 3,
+                  child: Row(
+                    children: <Widget>[
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                      //   child: Icon(Icons.add_circle),
+                      // ),
+                      Text('Time')
+                    ],
+                  ))
+            ]);
+  }
+
+  final TextEditingController _filterListener = new TextEditingController();
   Icon _searchIcon = new Icon(Icons.search);
   Widget _appBarTitle = Text('Imgur');
   @override
@@ -74,18 +131,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (this._searchIcon.icon == Icons.search) {
                       this._searchIcon = new Icon(Icons.close);
                       this._appBarTitle = new TextField(
-                        controller: _filter,
-                        decoration: new InputDecoration(hintText: 'Search...'),
+                        controller: _filterListener,
+                        decoration:
+                            new InputDecoration(hintText: 'Search by $filter'),
                       );
                     } else {
                       this._searchIcon = new Icon(Icons.search);
                       this._appBarTitle = new Text('Imgur');
-                      _filter.clear();
+                      _filterListener.clear();
                     }
                   });
                 },
                 child: _searchIcon,
               )),
+          myPopMenu(),
           IconButton(
             icon: const Icon(Icons.login),
             color: Colors.white,
