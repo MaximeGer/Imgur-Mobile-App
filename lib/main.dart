@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
               } else {
                 token = "";
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Disconnecting..."),
+                  content: Text("Disconnected"),
                 ));
               }
             },
