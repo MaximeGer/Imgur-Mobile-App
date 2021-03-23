@@ -23,10 +23,6 @@ class _ComptePageState extends State<ComptePage> {
                 {"Authorization": "Bearer $token"}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData && token.isNotEmpty) {
-                // snapshot.data.removeWhere((i) => ((i != null &&
-                //         i["images"].length != 0 &&
-                //         i["images"][0]["type"].contains('mp4')) ||
-                //     (i["cover"] == null)));
                 return ListView.builder(
                     padding: EdgeInsets.all(8),
                     itemCount: snapshot.data.length,
@@ -40,48 +36,4 @@ class _ComptePageState extends State<ComptePage> {
       ),
     );
   }
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(),
-  //     body: SingleChildScrollView(
-  //       child: Column(
-  //         children: <Widget>[
-  //           Visibility(
-  //             visible: token.isEmpty,
-  //             child: Column(
-  //               children: <Widget>[
-  //                 ElevatedButton(
-  //                   style: ElevatedButton.styleFrom(
-  //                     primary: Color(0xFF1bb76e), // background
-  //                     onPrimary: Colors.white, // foreground
-  //                     textStyle: TextStyle(fontSize: 18),
-  //                     minimumSize: Size(150, 45),
-  //                   ),
-  //                   onPressed: () {
-  //                     Navigator.push(
-  //                       context,
-  //                       new MaterialPageRoute(
-  //                           builder: (context) => LoginPage()),
-  //                     );
-  //                   },
-  //                   child: Text(
-  //                     'Login',
-  //                   ),
-  //                 )
-  //               ],
-  //             ),
-  //             replacement: Column(
-  //               children: <Widget>[
-  //                 Text(
-  //                   "Vous etes sur a page compte",
-  //                   style: TextStyle(color: Colors.white, fontSize: 18),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

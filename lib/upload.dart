@@ -18,7 +18,6 @@ class UploadPage extends StatefulWidget {
 class _UploadPageState extends State<UploadPage> {
   Future<dynamic> upload(
       String imageUrl, Map<String, String> headersParams) async {
-    //SharedPreferences prefs = await SharedPreferences.getInstance(); à implémenter plus tard
     var result = await http.post(Uri.parse('https://api.imgur.com/3/image'),
         headers: headersParams, body: {'image': imageUrl});
     print(json.decode(result.body)['data']);
@@ -137,32 +136,6 @@ class _UploadPageState extends State<UploadPage> {
           ),
         ),
       ),
-      // body: SingleChildScrollView(
-      //   child: Column(
-      //     children: <Widget>[
-      //       Column(
-      //         children: <Widget>[
-      //           ElevatedButton(
-      //             style: ElevatedButton.styleFrom(
-      //               primary: Color(0xFF1bb76e), // background
-      //               onPrimary: Colors.white, // foreground
-      //               textStyle: TextStyle(fontSize: 18),
-      //               minimumSize: Size(150, 45),
-      //             ),
-      //             onPressed: () {
-      //               print(upload(
-      //                   'https://www.serieously.com/wp-content/uploads/2019/05/v9jxsml42we21.jpg',
-      //                   {"Authorization": "Bearer $token"}));
-      //             },
-      //             child: Text(
-      //               'Post Image Url on Imgur',
-      //             ),
-      //           )
-      //         ],
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
