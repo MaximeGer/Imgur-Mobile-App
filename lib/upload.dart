@@ -74,8 +74,10 @@ class _UploadPageState extends State<UploadPage> {
 
   Widget _decideImageView() {
     if (imageFile == null) {
-      return Text("No Image Selected",
-      style: TextStyle(color: Colors.white),);
+      return Text(
+        "No Image Selected",
+        style: TextStyle(color: Colors.white),
+      );
     } else {
       return Image.file(File(imageFile.path), width: 400, height: 400);
     }
@@ -84,7 +86,9 @@ class _UploadPageState extends State<UploadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF1bb76e),
+      ),
       body: Container(
         child: Center(
           child: Column(
@@ -92,6 +96,12 @@ class _UploadPageState extends State<UploadPage> {
             children: <Widget>[
               _decideImageView(),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF474a51), // background
+                  onPrimary: Colors.white, // foreground
+                  textStyle: TextStyle(fontSize: 18),
+                  minimumSize: Size(150, 45),
+                ),
                 onPressed: () {
                   _showChoiceDialog(context);
                 },
@@ -112,7 +122,10 @@ class _UploadPageState extends State<UploadPage> {
 
                       print(bytesImage);
                       print(upload(
-                          bytesImage, token.isEmpty ? {"Authorization": "Client-ID $clientId"} : {"Authorization": "Bearer $token"}));
+                          bytesImage,
+                          token.isEmpty
+                              ? {"Authorization": "Client-ID $clientId"}
+                              : {"Authorization": "Bearer $token"}));
                     },
                     child: Text(
                       'Post Image Url on Imgur',

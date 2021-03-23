@@ -50,6 +50,9 @@ class _LoginScreenState extends State<LoginPage> {
         Navigator.of(context).push(
           new MaterialPageRoute(builder: (context) => MyHomePage()),
         );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Connected as $username"),
+        ));
       }
     });
   }
@@ -60,13 +63,15 @@ class _LoginScreenState extends State<LoginPage> {
             url: "https://api.imgur.com/oauth2/authorize?client_id=" +
                 clientId +
                 "&response_type=token&state=DEV",
-            appBar: new AppBar(title: new Text("Login to Imgur...")))));
+            appBar: new AppBar( backgroundColor: Color(0xFF1bb76e),title: new Text("Login to Imgur...")))));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF1bb76e),
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[

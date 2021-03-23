@@ -15,7 +15,9 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF1bb76e),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

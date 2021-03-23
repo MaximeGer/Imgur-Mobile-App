@@ -14,7 +14,9 @@ class _FavorisPageState extends State<FavorisPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF1bb76e),
+      ),
       body: Container(
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
