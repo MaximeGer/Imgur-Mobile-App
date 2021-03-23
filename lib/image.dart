@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:epicture/imports.dart';
 import 'package:epicture/main.dart';
@@ -71,10 +73,36 @@ class _ImagePageState extends State<ImagePage> {
                                         ],
                                       ),
                                       IconButton(
-                                        icon: const Icon(Icons.star),
+                                        icon: const Icon(Icons.favorite),
                                         color: Color(0xFF8e9094),
                                         iconSize: 24.0,
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          if (token.isEmpty) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "Essayez de vous connecter pour l'ajouter à vos favoris"),
+                                            ));
+                                          } else {
+                                            var etatfavoris = await favoris(
+                                                getId(snapshot.data[index]), {
+                                              "Authorization": "Bearer $token"
+                                            });
+                                            if (etatfavoris == "favorited") {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "Ajout de l'image aux favoris"),
+                                              ));
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "Suppresion du favori"),
+                                              ));
+                                            }
+                                          }
+                                        },
                                       ),
                                       Flex(
                                         direction: Axis.vertical,
@@ -82,7 +110,8 @@ class _ImagePageState extends State<ImagePage> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
                                           IconButton(
-                                            icon: const Icon(Icons.favorite),
+                                            icon:
+                                                const Icon(Icons.arrow_upward),
                                             color: Color(0xFF8e9094),
                                             iconSize: 24.0,
                                             onPressed: () {},

@@ -53,3 +53,24 @@ Future<List<dynamic>> fetch(
     return ["ErrorCode : ${result.statusCode}"];
   }
 }
+
+String getId(Map<dynamic, dynamic> gallery) {
+  if (gallery["images"] == null) {
+    if (gallery['cover'] == null) {
+      print(gallery["id"].toString());
+      return gallery["id"].toString();
+    } else {
+      return gallery['cover'];
+    }
+  } else {
+    return gallery["images"][0]["id"].toString();
+  }
+}
+
+Future<String> favoris(
+    String imageHash, Map<String, String> headersParams) async {
+  var result = await http.post(
+      Uri.parse('https://api.imgur.com/3/image/$imageHash/favorite'),
+      headers: headersParams);
+  return (json.decode(result.body)['data']);
+}
