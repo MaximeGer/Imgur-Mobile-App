@@ -7,6 +7,7 @@ var clientId = "761207468cb80bd";
 var token = "";
 var username = "";
 
+// récupérer le nombre de likes
 String likes(Map<dynamic, dynamic> gallery) {
   if (gallery['ups'] == null) {
     return "0";
@@ -17,6 +18,7 @@ String likes(Map<dynamic, dynamic> gallery) {
   return likes.toString() + "k";
 }
 
+// récupérer le nombre de commentaires
 String comment(Map<dynamic, dynamic> gallery) {
   if (gallery['comment_count'] == null) {
     return "0";
@@ -27,6 +29,7 @@ String comment(Map<dynamic, dynamic> gallery) {
   return likes.toString() + "k";
 }
 
+// récupérer le lien d'une image venant de l'api
 String links(Map<dynamic, dynamic> gallery) {
   if (gallery["images"] == null) {
     if (gallery['cover'] == null) {
@@ -39,6 +42,7 @@ String links(Map<dynamic, dynamic> gallery) {
   }
 }
 
+// fonction fetch basique
 Future<List<dynamic>> fetch(
     String url, Map<String, String> headersParams) async {
   //SharedPreferences prefs = await SharedPreferences.getInstance(); à implémenter plus tard
@@ -50,6 +54,7 @@ Future<List<dynamic>> fetch(
   }
 }
 
+// récupérer l'id d'une image venant de l'api
 String getId(Map<dynamic, dynamic> gallery) {
   if (gallery["images"] == null) {
     if (gallery['cover'] == null) {
@@ -62,6 +67,7 @@ String getId(Map<dynamic, dynamic> gallery) {
   }
 }
 
+// récupérer les favoris du compte courant
 Future<String> favoris(
     String imageHash, Map<String, String> headersParams) async {
   var result = await http.post(
@@ -70,6 +76,7 @@ Future<String> favoris(
   return (json.decode(result.body)['data']);
 }
 
+// schéma de carte
 Widget card(AsyncSnapshot<dynamic> snapshot, int index, BuildContext context) {
   return Card(
       child: Container(
