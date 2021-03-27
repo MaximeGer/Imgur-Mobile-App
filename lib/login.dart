@@ -28,14 +28,8 @@ class _LoginScreenState extends State<LoginPage> {
 
     flutterWebviewPlugin.close();
 
-    // Add a listener to on destroy WebView, so you can make came actions.
-    _onDestroy = flutterWebviewPlugin.onDestroy.listen((_) {
-      print("destroy");
-    });
-
     _onStateChanged =
         flutterWebviewPlugin.onStateChanged.listen((WebViewStateChanged state) {
-      print(state.url);
       if (state.url.startsWith("https://imgur.com/?state=DEV") ||
           state.url.startsWith("https://m.imgur.com/?state=DEV")) {
         RegExp regExpToken = new RegExp(r"#access_token=(.*)");
@@ -44,8 +38,6 @@ class _LoginScreenState extends State<LoginPage> {
         token = token.split("&")[0];
         username = regExpUsername.firstMatch(state.url)?.group(1);
         username = username.split("&")[0];
-        print("token $token");
-        print("username $username");
         Navigator.of(context).pop(true);
         Navigator.of(context).push(
           new MaterialPageRoute(builder: (context) => MyHomePage()),

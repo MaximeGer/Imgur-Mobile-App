@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:epicture/imports.dart';
 import 'package:epicture/main.dart';
@@ -20,7 +18,6 @@ class _ImagePageState extends State<ImagePage> {
       body: Container(
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
-                //'https://api.imgur.com/3/gallery/hot/viral/day/0?showViral=true&mature=true&album_previews=false'
                 search.trim().isNotEmpty
                     ? 'https://api.imgur.com/3/gallery/search/$filter/day/0?q=$search'
                     : 'https://api.imgur.com/3/gallery/hot/$filter/day/0?showViral=true&mature=true&album_previews=false',

@@ -18,9 +18,8 @@ class UploadPage extends StatefulWidget {
 class _UploadPageState extends State<UploadPage> {
   Future<dynamic> upload(
       String imageUrl, Map<String, String> headersParams) async {
-    var result = await http.post(Uri.parse('https://api.imgur.com/3/image'),
+    await http.post(Uri.parse('https://api.imgur.com/3/image'),
         headers: headersParams, body: {'image': imageUrl});
-    print(json.decode(result.body)['data']);
   }
 
   PickedFile imageFile;
@@ -119,12 +118,11 @@ class _UploadPageState extends State<UploadPage> {
                       bytesImage =
                           base64.encode(File(imageFile.path).readAsBytesSync());
 
-                      print(bytesImage);
-                      print(upload(
+                      upload(
                           bytesImage,
                           token.isEmpty
                               ? {"Authorization": "Client-ID $clientId"}
-                              : {"Authorization": "Bearer $token"}));
+                              : {"Authorization": "Bearer $token"});
                     },
                     child: Text(
                       'Post Image Url on Imgur',

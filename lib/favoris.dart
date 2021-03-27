@@ -23,7 +23,6 @@ class _FavorisPageState extends State<FavorisPage> {
                 "https://api.imgur.com/3/account/$username/favorites/0/newest",
                 {"Authorization": "Bearer $token"}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              print("snapshot:$snapshot");
               if (snapshot.hasData && token.isNotEmpty) {
                 snapshot.data.removeWhere((i) => ((i["images"] != null &&
                         i["images"].length != 0 &&

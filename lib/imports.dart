@@ -28,10 +28,8 @@ String comment(Map<dynamic, dynamic> gallery) {
 }
 
 String links(Map<dynamic, dynamic> gallery) {
-  print("gallery:$gallery");
   if (gallery["images"] == null) {
     if (gallery['cover'] == null) {
-      print(gallery["link"].toString());
       return gallery["link"].toString();
     } else {
       return "https://i.imgur.com/${gallery['cover']}.${gallery['type'].split("/")[1]}";
@@ -55,7 +53,6 @@ Future<List<dynamic>> fetch(
 String getId(Map<dynamic, dynamic> gallery) {
   if (gallery["images"] == null) {
     if (gallery['cover'] == null) {
-      print(gallery["id"].toString());
       return gallery["id"].toString();
     } else {
       return gallery['cover'];
