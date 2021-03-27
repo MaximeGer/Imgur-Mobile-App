@@ -14,14 +14,15 @@ class _FavorisPageState extends State<FavorisPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF1bb76e),
+      ),
       body: Container(
         child: FutureBuilder<List<dynamic>>(
             future: fetch(
                 "https://api.imgur.com/3/account/$username/favorites/0/newest",
                 {"Authorization": "Bearer $token"}),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              print("snapshot:$snapshot");
               if (snapshot.hasData && token.isNotEmpty) {
                 snapshot.data.removeWhere((i) => ((i["images"] != null &&
                         i["images"].length != 0 &&
@@ -31,71 +32,7 @@ class _FavorisPageState extends State<FavorisPage> {
                     padding: EdgeInsets.all(8),
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Color(0xFF2c2f34),
-                              ),
-                              child: Column(children: <Widget>[
-                                Image.network(links(snapshot.data[index])),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 15,
-                                    bottom: 5,
-                                  ),
-                                  child: Flex(
-                                    direction: Axis.horizontal,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Flex(
-                                        direction: Axis.vertical,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          IconButton(
-                                            icon: const Icon(Icons.message),
-                                            color: Color(0xFF8e9094),
-                                            iconSize: 24.0,
-                                            onPressed: () {},
-                                          ),
-                                          Text(
-                                            comment(snapshot.data[index]),
-                                            style: TextStyle(
-                                                color: Color(0xFF8e9094)),
-                                          )
-                                        ],
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.star),
-                                        color: Color(0xFF8e9094),
-                                        iconSize: 24.0,
-                                        onPressed: () {},
-                                      ),
-                                      Flex(
-                                        direction: Axis.vertical,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          IconButton(
-                                            icon: const Icon(Icons.favorite),
-                                            color: Color(0xFF8e9094),
-                                            iconSize: 24.0,
-                                            onPressed: () {},
-                                          ),
-                                          Text(
-                                            likes(snapshot.data[index]),
-                                            style: TextStyle(
-                                                color: Color(0xFF8e9094)),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ])));
+                      return card(snapshot, index, context);
                     });
               } else
                 return Card(

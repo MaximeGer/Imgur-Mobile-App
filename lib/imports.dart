@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter/material.dart';
 
 var clientId = "761207468cb80bd";
 var token = "";
 var username = "";
 
+// récupérer le nombre de likes
 String likes(Map<dynamic, dynamic> gallery) {
   if (gallery['ups'] == null) {
     return "0";
@@ -15,6 +18,7 @@ String likes(Map<dynamic, dynamic> gallery) {
   return likes.toString() + "k";
 }
 
+// récupérer le nombre de commentaires
 String comment(Map<dynamic, dynamic> gallery) {
   if (gallery['comment_count'] == null) {
     return "0";
@@ -25,15 +29,10 @@ String comment(Map<dynamic, dynamic> gallery) {
   return likes.toString() + "k";
 }
 
+// récupérer le lien d'une image venant de l'api
 String links(Map<dynamic, dynamic> gallery) {
-  //+ "." + snapshot.data[index]["type"].split("/")[1]
-  // return gallery["images"] == null
-  //     ? "https://i.imgur.com/${gallery['cover']}.${gallery['type'].split("/")[1]}"
-  //     : gallery["images"][0]["link"].toString();
-  print("gallery:$gallery");
   if (gallery["images"] == null) {
     if (gallery['cover'] == null) {
-      print(gallery["link"].toString());
       return gallery["link"].toString();
     } else {
       return "https://i.imgur.com/${gallery['cover']}.${gallery['type'].split("/")[1]}";
@@ -43,6 +42,7 @@ String links(Map<dynamic, dynamic> gallery) {
   }
 }
 
+// fonction fetch basique
 Future<List<dynamic>> fetch(
     String url, Map<String, String> headersParams) async {
   //SharedPreferences prefs = await SharedPreferences.getInstance(); à implémenter plus tard
@@ -52,4 +52,109 @@ Future<List<dynamic>> fetch(
   } else {
     return ["ErrorCode : ${result.statusCode}"];
   }
+}
+
+// récupérer l'id d'une image venant de l'api
+String getId(Map<dynamic, dynamic> gallery) {
+  if (gallery["images"] == null) {
+    if (gallery['cover'] == null) {
+      return gallery["id"].toString();
+    } else {
+      return gallery['cover'];
+    }
+  } else {
+    return gallery["images"][0]["id"].toString();
+  }
+}
+
+// récupérer les favoris du compte courant
+Future<String> favoris(
+    String imageHash, Map<String, String> headersParams) async {
+  var result = await http.post(
+      Uri.parse('https://api.imgur.com/3/image/$imageHash/favorite'),
+      headers: headersParams);
+  return (json.decode(result.body)['data']);
+}
+
+// schéma de carte
+Widget card(AsyncSnapshot<dynamic> snapshot, int index, BuildContext context) {
+  return Card(
+      child: Container(
+          decoration: BoxDecoration(
+            color: Color(0xFF2c2f34),
+          ),
+          child: Column(children: <Widget>[
+            Image.network(links(snapshot.data[index])),
+            Padding(
+              padding: EdgeInsets.only(
+                top: 15,
+                bottom: 5,
+              ),
+              child: Flex(
+                direction: Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Flex(
+                    direction: Axis.vertical,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.message),
+                        color: Color(0xFF8e9094),
+                        iconSize: 24.0,
+                        onPressed: () {},
+                      ),
+                      Text(
+                        comment(snapshot.data[index]),
+                        style: TextStyle(color: Color(0xFF8e9094)),
+                      )
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.favorite),
+                    color: Color(0xFF8e9094),
+                    iconSize: 24.0,
+                    onPressed: () async {
+                      if (token.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              "Essayez de vous connecter pour l'ajouter à vos favoris"),
+                        ));
+                      } else {
+                        var etatfavoris = await favoris(
+                            getId(snapshot.data[index]),
+                            {"Authorization": "Bearer $token"});
+                        if (etatfavoris == "favorited") {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Ajout de l'image aux favoris"),
+                          ));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Suppresion du favori"),
+                          ));
+                        }
+                      }
+                    },
+                  ),
+                  Flex(
+                    direction: Axis.vertical,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.arrow_upward),
+                        color: Color(0xFF8e9094),
+                        iconSize: 24.0,
+                        onPressed: () {},
+                      ),
+                      Text(
+                        likes(snapshot.data[index]),
+                        style: TextStyle(color: Color(0xFF8e9094)),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ])));
 }

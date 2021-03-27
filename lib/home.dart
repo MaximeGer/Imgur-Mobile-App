@@ -1,9 +1,6 @@
-import 'dart:convert';
-
-import 'package:epicture/image.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'imports.dart';
+import 'package:epicture/imports.dart';
+import 'package:epicture/main.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -15,52 +12,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void homeData() async {
-    var response = await http.get(
-      Uri.parse('https://api.imgur.com/3/image/T0IBWsL'),
-      headers: {'Authorization': 'Client-ID ' + clientId},
-    );
-
-    final repStr = jsonDecode(response.body);
-
-    print(repStr);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: ImagePage()
-        // Container(
-        //   width: double.infinity,
-        //   decoration: BoxDecoration(
-        //       //color: Color(0xFF141518),
-        //       ),
-        //   child: Column(
-        //     children: <Widget>[
-        //       SizedBox(
-        //         height: 150,
-        //       ),
-        //       Text(
-        //         "Home Page",
-        //         style: TextStyle(color: Colors.white, fontSize: 40),
-        //       ),
-        //       SizedBox(
-        //         height: 10,
-        //       ),
-        //       ElevatedButton(
-        //         style: ElevatedButton.styleFrom(
-        //           primary: Color(0xFF1bb76e), // background
-        //           onPrimary: Colors.white, // foreground
-        //           textStyle: TextStyle(fontSize: 18),
-        //           minimumSize: Size(150, 45),
-        //         ),
-        //         onPressed: homeData,
-        //         child: Text(
-        //           'homeData',
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        );
+    return Scaffold(
+      body: Container(
+        child: FutureBuilder<List<dynamic>>(
+            future: fetch(
+                search.trim().isNotEmpty
+                    ? 'https://api.imgur.com/3/gallery/search/$filter/day/0?q=$search'
+                    : 'https://api.imgur.com/3/gallery/hot/$filter/day/0?showViral=true&mature=true&album_previews=false',
+                {"Authorization": 'Client-ID ' + clientId}),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                snapshot.data.removeWhere((i) => ((i["Homes"] != null &&
+                        i["Homes"].length != 0 &&
+                        i["Homes"][0]["type"].contains('mp4')) ||
+                    (i["cover"] == null)));
+                return ListView.builder(
+                    padding: EdgeInsets.all(8),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return card(snapshot, index, context);
+                    });
+              } else
+                return Card(child: Text("Pas d'Homes retrouvées"));
+            }),
+      ),
+    );
   }
 }
