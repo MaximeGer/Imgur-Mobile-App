@@ -1,6 +1,5 @@
 import 'package:epicture/home.dart';
 import 'package:epicture/login.dart';
-import 'package:epicture/settings.dart';
 import 'package:epicture/upload.dart';
 import 'package:flutter/material.dart';
 
@@ -211,18 +210,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     new MaterialPageRoute(builder: (context) => FavorisPage()),
-                  );
-                },
-              ),
-              ListTile(
-                title: new Text(
-                  "Settings",
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    new MaterialPageRoute(builder: (context) => SettingsPage()),
                   );
                 },
               ),
