@@ -21,4 +21,6 @@ Avant de lancer le projet dans le terminal lancer la commande : flutter pub get
 
 Ensuite Selectionner un Emulateur mobile et non web pour eviter tout problème
 
-Et enfin ouvrir la pagemain.dart et lancer l'application
+Et enfin ouvrir la page main.dart et lancer l'application
+
+Il existe un dossier Documentation pour plus d'explications sur l'application
