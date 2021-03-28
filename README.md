@@ -17,10 +17,10 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Lancement du Projet
 
-Avant de lancer le projet dans le terminal lancer la commande : flutter pub get
+Avant de lancer le projet dans le terminal lancez la commande : flutter pub get
 
-Ensuite Selectionner un Emulateur mobile et non web pour eviter tout problème
+Ensuite séléctionnez un Emulateur mobile et non web pour eviter tout problème
 
-Et enfin ouvrir la page main.dart et lancer l'application
+Et enfin ouvrez la page main.dart et lancez l'application
 
-Il existe un dossier Documentation pour plus d'explications sur l'application
+Il existe un dossier Documentation pour plus d'explications sur l'application et son fonctionnement
