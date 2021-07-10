@@ -15,12 +15,12 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Lancement du Projet
+## Launching the Project
 
-Avant de lancer le projet dans le terminal lancez la commande : flutter pub get
+Before launching the project in the terminal run the command: flutter pub get
 
-Ensuite séléctionnez un Emulateur mobile et non web pour eviter tout problème
+Then select a mobile emulator and not a web one to avoid any problem
 
-Et enfin ouvrez la page main.dart et lancez l'application
+And finally open the main.dart page and launch the application
 
-Il existe un dossier Documentation pour plus d'explications sur l'application et son fonctionnement
+There is a Documentation folder for more explanations about the application and its functioning
