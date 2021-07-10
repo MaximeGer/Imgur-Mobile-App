@@ -1,4 +1,4 @@
-# epicture
+# Imgur-Mobile-App Example
 
 A new Flutter project.
 
